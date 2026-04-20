@@ -16,15 +16,15 @@ class Obstacle {
   }
 
   void display() {
-   image(O1, x, y);
-   imageMode(CENTER);
+    image(O1, x, y);
+    imageMode(CENTER);
   }
 
   void move() {
-   x=x+speed;
-   if(x>width){
-     x = 0;
-   }
+    x=x+speed;
+    if (x>width+w/2) {
+      x = 0;
+    }
   }
 
   void fire() {

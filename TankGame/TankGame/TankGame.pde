@@ -5,13 +5,16 @@ ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 Obstacle obs1;
 PImage bg;
 int score;
+Timer objTimer;
 
 void setup() {
   size(500, 500);
   score = 0;
   bg =  loadImage("desert.png");
   t1 = new Tank();
-obstacles.add(new Obstacle(300,200,100,100, int(random(1,10)),10));
+  objTimer = new Timer(1000);
+  objTimer.start();
+  //obstacles.add(new Obstacle(300, 200, 100, 100, int(random(1, 10)), 10));
 }
 
 
@@ -20,15 +23,31 @@ void draw() {
   background(127);
   imageMode(CORNER);
   image(bg, 0, 0);
-  
-  
+
+  //Distribute object on timer
+  if (objTimer.isFinished()) {
+    //Add object
+    obstacles.add(new Obstacle(-100, 200, 100, 100, int(random(1, 10)), 10));
+    //Restart timer
+    objTimer.start();
+  }
+
   for (int i = 0; i < obstacles.size(); i++) {
-  Obstacle o = obstacles.get(i);
-  o.display();
-  o.move();
-}
+    Obstacle o = obstacles.get(i);
+    o.display();
+    o.move();
+  }
+  // Render and detect collision
   for (int i = 0; i < projectiles.size(); i++) {
     Projectile p = projectiles.get(i);
+    for(int j = 0; j < obstacles.size(); j++) {
+      Obstacle o = obstacles.get(j);
+      if(p.intersect(o)) {
+        score = score + 100;
+        projectiles.remove(i);
+        obstacles.remove(j);
+      }
+    }
     p.display();
     p.move();
   }
@@ -52,13 +71,13 @@ void mousePressed() {
   float dx = mouseX - t1.x;
   float dy = mouseY - t1.y;
   float mag = sqrt(dx*dx + dy*dy);
-  
+
   if (mag > 0) {
     dx /= mag;
     dy /= mag;
-    
+
     float speed = 5;
-    projectiles.add(new Projectile(t1.x, t1.y, 4, 10));
+    projectiles.add(new Projectile(t1.x, t1.y, dx * speed, dy * speed));
   }
 }
 
