@@ -3,7 +3,7 @@ Tank t1;
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 ArrayList<PowerUp> powerups = new ArrayList<PowerUp>();
-Obstacle obs1;
+//Obstacle obs1;
 PImage bg;
 int score;
 Timer objTimer, puTimer;
@@ -30,15 +30,15 @@ void draw() {
   //Distribute object on timer
   if (objTimer.isFinished()) {
     //Add object
-    obstacles.add(new Obstacle(100, 100, int(random(1, 10)), 10));
+    obstacles.add(new Obstacle(100, 100, 5, 10));
     //Restart timer
     objTimer.start();
   }
 
-  //Distribute powerups on timer
+  ////Distribute powerups on timer
   if (puTimer.isFinished()) {
     //Add powerup
-    powerups.add(new PowerUp(100, 100));
+    powerups.add(new PowerUp());
     //Restart timer
     puTimer.start();
   }
@@ -48,9 +48,9 @@ void draw() {
     PowerUp pu = powerups.get(i);
     pu.display();
     pu.move();
-    if (pu.reachedEdge()) {
-      obstacles.remove(pu);
-    }
+    //if (pu.reachedEdge()) {
+    //  obstacles.remove(pu);
+    //}
     if (pu.intersect(t1)) {
       //Turret
       if (pu.type == 't') {
@@ -66,34 +66,35 @@ void draw() {
   }
 
 
-  //Displays and removes obstacles
+  ////Displays and removes obstacles
   for (int i = 0; i < obstacles.size(); i++) {
     Obstacle o = obstacles.get(i);
     o.display();
     o.move();
-    if (o.reachedEdge()) {
-      obstacles.remove(i);
-    }
+    //if (o.reachedEdge()) {
+     // obstacles.remove(o);
+   // }
     //detect collision to tank
-    if (t1.intersect(o)) {
-    }
+    //if (t1.intersect(o)) {
+     // t1.health=t1.health-2;
+    //}
     //impact to change score,health and obstacles
   }
-  // Render and detect collision
+  //// Render and detect collision
   for (int i = 0; i < projectiles.size(); i++) {
     Projectile p = projectiles.get(i);
     for (int j = 0; j < obstacles.size(); j++) {
       Obstacle o = obstacles.get(j);
       if (p.intersect(o)) {
         score = score + 100;
-        projectiles.remove(i);
-        obstacles.remove(j);
+        projectiles.remove(p);
+        obstacles.remove(o);
       }
     }
     p.display();
     p.move();
     if (p.reachedEdge()) {
-      projectiles.remove(i);
+      projectiles.remove(p);
     }
   }
   t1.display();

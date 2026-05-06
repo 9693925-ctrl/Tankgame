@@ -4,6 +4,7 @@ class Tank {
   PImage iTankA, iTankW, iTankS, iTankD;
   char idir;
   int turretCount;
+  int laserCount;
   
   // Constructor
   Tank() {
@@ -19,6 +20,7 @@ class Tank {
     iTankD = loadImage ("tankflip.png");
     idir='w';
     turretCount=1;
+    laserCount=100;
   }
 
   void display() {

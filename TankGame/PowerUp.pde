@@ -5,7 +5,7 @@ class PowerUp {
   char type;
 
   // Constructor
-  PowerUp(float w, float h) {
+  PowerUp() {
 
     w = 100;
     h = 100;
@@ -25,7 +25,6 @@ class PowerUp {
       y=-100;
     }
     //O1 = loadImage ("obstacle1.png");
-    type='w';
   }
 
 
@@ -42,7 +41,8 @@ class PowerUp {
       fill(255);
       textAlign(CENTER,CENTER);
       text("Turret", x, y);
-    } else  if (type == 'a') {
+    } else   {
+      
       fill(200, 0, 0);
       ellipse(x, y, w, h);
       fill(255);
@@ -58,7 +58,7 @@ class PowerUp {
   }
 
   boolean reachedEdge() {
-    if (x < 0-w/2 || x > width+w/2 || y < 0-w/2 || y> height+w/2) {
+    if (x < x-w/2 || x > x+w/2 || y < y-h/2 || y> y+h/2) {
       return true;
     } else {
       return false;
